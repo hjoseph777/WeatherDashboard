@@ -3,6 +3,11 @@
 # dependencies
 node_modules/
 
+# VS Code settings - KEEP .vscode/settings.json for Tokyo Night theme sharing
+# .vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
 # Expo
 .expo/
 dist/
