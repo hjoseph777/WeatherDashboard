@@ -1,0 +1,66 @@
+{
+    "workbench.colorTheme": "Tokyo Night",
+    "workbench.preferredDarkColorTheme": "Tokyo Night",
+    "workbench.preferredLightColorTheme": "Tokyo Night",
+    
+    "markdown.preview.theme": "dark",
+    "markdown.preview.fontFamily": "Consolas, 'Courier New', monospace",
+    "markdown.preview.fontSize": 14,
+    "markdown.preview.lineHeight": 1.6,
+    
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        },
+        "editor.fontSize": 14,
+        "editor.lineHeight": 1.6,
+        "editor.fontFamily": "Consolas, 'Courier New', monospace"
+    },
+    
+    "files.associations": {
+        "*.md": "markdown"
+    },
+    
+    "editor.tokenColorCustomizations": {
+        "[Tokyo Night]": {
+            "textMateRules": [
+                {
+                    "scope": "markup.heading",
+                    "settings": {
+                        "foreground": "#7aa2f7",
+                        "fontStyle": "bold"
+                    }
+                },
+                {
+                    "scope": "markup.bold",
+                    "settings": {
+                        "foreground": "#ff9e64",
+                        "fontStyle": "bold"
+                    }
+                },
+                {
+                    "scope": "markup.italic",
+                    "settings": {
+                        "foreground": "#bb9af7",
+                        "fontStyle": "italic"
+                    }
+                },
+                {
+                    "scope": "markup.inline.raw",
+                    "settings": {
+                        "foreground": "#9ece6a"
+                    }
+                },
+                {
+                    "scope": "markup.fenced_code",
+                    "settings": {
+                        "foreground": "#9ece6a"
+                    }
+                }
+            ]
+        }
+    }
+}

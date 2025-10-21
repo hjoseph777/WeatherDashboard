@@ -1,0 +1,27 @@
+# Ensure proper line endings and file handling for cross-platform development
+* text=auto
+
+# Markdown files - ensure consistent formatting on GitHub
+*.md text eol=lf
+
+# Code files - maintain consistent formatting
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+
+# Images and assets - treat as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+
+# VS Code settings - ensure team consistency
+.vscode/* text eol=lf
+
+# Expo and React Native files
+*.expo text eol=lf
+expo.json text eol=lf
+app.json text eol=lf

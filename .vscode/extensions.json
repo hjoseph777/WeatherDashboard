@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "enkia.tokyo-night",
+        "ms-vscode.vscode-json",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+    ],
+    "unwantedRecommendations": []
+}
