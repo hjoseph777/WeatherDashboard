@@ -1,8 +1,5 @@
 {
-    "workbench.colorTheme": "Tokyo Night",
-    "workbench.preferredDarkColorTheme": "Tokyo Night",
-    "workbench.preferredLightColorTheme": "Tokyo Night",
-    
+
     "markdown.preview.theme": "dark",
     "markdown.preview.fontFamily": "Consolas, 'Courier New', monospace",
     "markdown.preview.fontSize": 14,
