@@ -2,14 +2,6 @@
 
 # 🌤️ Weather Dashboard - React Native App
 
-![GitHub](https://img.shields.io/badge/GitHub-Tokyo%20Night%20Optimized-7aa2f7?style=for-the-badge&logo=github)
-![VS Code](https://img.shields.io/badge/VS%20Code-Tokyo%20Night%20Theme-bb9af7?style=for-the-badge&logo=visual-studio-code)
-![Expo](https://img.shields.io/badge/Expo%20SDK-54.0.16-000020?style=for-the-badge&logo=expo)
-
-**A comprehensive weather application built with React Native and Expo for CPAN 213 Mobile App Development.**
-
-*This project is optimized for Tokyo Night theme development experience* 🌃
-
 </div>
 
 ## 📋 **Priority Documentation Links**
