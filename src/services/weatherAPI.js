@@ -3,9 +3,9 @@
  * This service handles all weather data fetching from OpenWeatherMap API
  */
 
-// TODO: Replace with your actual API key from OpenWeatherMap
-const API_KEY = 'YOUR_API_KEY_HERE';
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+// TODO: Replace with your weather API key
+const API_KEY = 'a4878a7864bd429e827183105252410';
+const BASE_URL = 'http://api.weatherapi.com/v1';
 
 class WeatherAPI {
   /**
@@ -15,25 +15,46 @@ class WeatherAPI {
    */
   static async getCurrentWeather(city) {
     try {
-      const response = await fetch(
-        `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
-      );
+      // get current city
+      console.log('Fetching weather for city:', city);
+
+      // if unable to fetch from API
+      if (!API_KEY) {
+        throw new Error('API key is missing. Please check API key.');
+      }
+
+      // get encoded city name for URL
+      const encodedCity = encodeURIComponent(city);
       
+      // url to fetch weather data
+      const url = `${BASE_URL}/current.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`;
+      console.log('Fetching weather data from URL:', url);
+
+      // fetching data from API status
+      const response = await fetch(url);
+      console.log('API response status:', response.status);
+
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Invalid API key.');
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
+      // parse JSON data
       const data = await response.json();
+      
       return {
         success: true,
         data: {
-          city: data.name,
-          country: data.sys.country,
-          temperature: Math.round(data.main.temp),
-          description: data.weather[0].description,
-          humidity: data.main.humidity,
-          windSpeed: data.wind.speed,
-          icon: data.weather[0].icon,
+          city: data.location.name, // get city name from data
+          country: data.location.country, // get country name from data
+          temperature: Math.round(data.current.temp_c), // get temperature in Celsius
+          description: data.current.condition.text, // get weather description
+          humidity: data.current.humidity, // get humidity percentage
+          windSpeed: data.current.wind_kph, // get wind speed in kph
+          icon: data.current.condition.icon, // get weather icon URL
+          feelsLike: Math.round(data.current.feelslike_c), // get feels like temperature
         }
       };
     } catch (error) {
@@ -50,28 +71,44 @@ class WeatherAPI {
    * @param {string} city - City name
    * @returns {Promise<Object>} Forecast data
    */
-  static async getForecast(city) {
+  static async getForecast(city, days = 5) {
     try {
-      const response = await fetch(
-        `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
-      );
+      // get forecast for city
+      console.log('Fetching forecast for city:', city);
+
+      // if unable to fetch from API
+      if (!API_KEY) {
+        throw new Error('API key is missing. Please check API key.');
+      }
+
+      // get encoded city name for URL
+      const encodedCity = encodeURIComponent(city);
+      const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${city}}&days=7&aqi=no&alerts=no`;
       
+      console.log('Fetching forecast data from URL:', url);
+
+      // fetching data from API status
+      const response = await fetch(url);
+      console.log('API response status:', response.status);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
+      // parse JSON data
       const data = await response.json();
-      
+      console.log('Forecast data received:', data.forcast?.forecastday?.length);
+
       // Process forecast data (one entry per day)
-      const dailyForecast = data.list.filter((item, index) => index % 8 === 0);
+      const dailyForecast = data.forecast.forecastday;
       
       return {
         success: true,
-        data: dailyForecast.map(item => ({
-          date: new Date(item.dt * 1000).toLocaleDateString(),
-          temperature: Math.round(item.main.temp),
-          description: item.weather[0].description,
-          icon: item.weather[0].icon,
+        data: dailyForecast.map(day => ({
+          date: day.date, // get date of the forecast
+          temperature: Math.round(day.day.avgtemp_c), // get average temperature in Celsius
+          description: day.day.condition.text, // get weather description
+          icon: day.day.condition.icon, // get weather icon URL
         }))
       };
     } catch (error) {
@@ -87,7 +124,7 @@ class WeatherAPI {
    * Mock data for testing (use when API key is not available)
    * @param {string} city - City name
    * @returns {Object} Mock weather data
-   */
+   * 
   static getMockCurrentWeather(city) {
     return {
       success: true,
@@ -107,7 +144,7 @@ class WeatherAPI {
    * Mock forecast data for testing
    * @param {string} city - City name
    * @returns {Object} Mock forecast data
-   */
+   *
   static getMockForecast(city) {
     return {
       success: true,
@@ -119,7 +156,7 @@ class WeatherAPI {
         { date: 'Fri', temperature: 21, description: 'Sunny', icon: '01d' },
       ]
     };
-  }
+  } */
 }
 
 export default WeatherAPI;

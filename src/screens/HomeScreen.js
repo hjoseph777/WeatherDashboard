@@ -1,99 +1,95 @@
 // src/screens/HomeScreen.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   Modal,
-  StyleSheet,
+  StyleSheet, ScrollView
 } from "react-native";
 import AnimatedIcon from "../components/AnimatedIcon";
 import WeatherCard from "../components/WeatherCard";
 import LoadingSpinner from "../components/LoadingSpinner";
+import WeatherAPI from '../services/weatherAPI';
+import CustomButton from "../components/CustomButton";
 
 export default function HomeScreen({ navigation }) {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [weatherData, setWeatherData] = useState(null);
+  const [currentCity, setCurrentCity] = useState('Toronto');
 
-  // Mock data — replace with API data later
-  const weatherDetails = {
-    city: "Toronto",
-    temp: "25°C",
-    humidity: "60%",
-    wind: "10 km/h",
+  // load weather data when component mounts
+  useEffect(() => {
+    loadWeatherData();
+  }, []);
+
+  const loadWeatherData = async (city = currentCity) => {
+    try {
+      setIsLoading(true);
+      console.log('Loading weather data for:', city);
+      
+      const result = await WeatherAPI.getCurrentWeather(city);
+      console.log('Weather API result:', result);
+      
+      setWeatherData(result);
+    } catch (error) {
+      console.error('Error loading weather data:', error);
+      setWeatherData({
+        success: false,
+        error: error.message || 'Failed to load weather data'
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  // refresh weather data
   const handleRefresh = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    loadWeatherData();
   };
+
+  // handle city change
+  const handleCityChange = (newCity) => {
+    if (newCity && newCity.trim()) {
+      setCurrentCity(newCity.trim());
+      loadWeatherData(newCity.trim());
+    }
+  };
+
+  /* simple city selection without navigation
+  const handleQuickCityChange = (city) => {
+    setCurrentCity(city);
+    loadWeatherData(city);
+  };*/
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Weather Dashboard</Text>
-
-      <AnimatedIcon icon="🌤️" animationType="bounce" />
-
-      <WeatherCard />
-
-      <TouchableOpacity
-        style={[styles.button, styles.refreshButton]}
-        onPress={handleRefresh}
-      >
-        <Text style={styles.buttonText}>🔄 Refresh Weather</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.button, styles.forecastButton]}
-        onPress={() => navigation.navigate("Forecast")}
-      >
-        <Text style={styles.buttonText}>📅 View Forecast</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.button, styles.savedButton]}
-        onPress={() => navigation.navigate("SavedLocations")}
-      >
-        <Text style={styles.buttonText}>📍 Saved Locations</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.button, styles.detailsButton]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.buttonText}>ℹ️ View Details</Text>
-      </TouchableOpacity>
-
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableOpacity
-          style={styles.overlay}
-          activeOpacity={1}
-          onPressOut={() => setModalVisible(false)}
-        >
-          <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>{weatherDetails.city}</Text>
-            <Text>Temperature: {weatherDetails.temp}</Text>
-            <Text>Humidity: {weatherDetails.humidity}</Text>
-            <Text>Wind Speed: {weatherDetails.wind}</Text>
-
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              style={styles.closeButton}
-            >
-              <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      </Modal>
-
-      <LoadingSpinner visible={loading} text="Refreshing..." />
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.title}>Weather Dashboard</Text>
+          
+        <AnimatedIcon iconName="🌤️" animationType="bounce" />
+          
+        <WeatherCard weatherData={weatherData}/>
+          
+        <CustomButton 
+          title="Refresh Weather" 
+          onPress={handleRefresh}
+        />
+          
+        <CustomButton 
+          title="View Forecast" 
+          onPress={() => navigation.navigate('Forecast')}
+          style={{ backgroundColor: '#45b7d1' }}
+        />
+          
+        <CustomButton 
+          title="Saved Locations" 
+          onPress={() => navigation.navigate('SavedLocations')}
+          style={{ backgroundColor: '#f7b731' }}
+        />
+      </ScrollView>
+      <LoadingSpinner visible={isLoading} text="Fetching weather data..." />
     </View>
   );
 }

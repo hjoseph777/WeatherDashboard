@@ -6,14 +6,39 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
  * This component displays weather information in a card format
  */
 const WeatherCard = ({ weatherData }) => {
+  // show loading state if weather data is not available
+  if (!weatherData) {
+    console.log('No weather data available, showing loading state.');
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loadingText}>Loading weather data...</Text>
+      </View>
+    );
+  }
+
+  // if there's an error in the weather data
+  if (weatherData.error) {
+    console.log('Error in weather data:', weatherData.error);
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Error: {weatherData.error || 'Failed to load weather data'}</Text>
+      </View>
+    );
+  }
+
+  // if weather data is available, display it
+  const {data } = weatherData;
+  console.log('Displaying weather data for:', data.city);
+
+  // render weather information
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Weather Card Component</Text>
-      <Text style={styles.subtitle}>Developer 1: API Integration & Progress Management</Text>
-      <Text style={styles.description}>
-        This component will display weather data from the API
-      </Text>
-      {/* TODO: Implement weather data display */}
+      <View style={styles.temperatureContainer}>
+        <Text style={styles.title}>{data.city}, {data.country}</Text>
+        <Text style={styles.subtitle}>{data.temperature}°C</Text>
+        <Text style={styles.description}>{data.description}</Text>
+        <Text style={styles.feelsLike}>Feels like: {data.feelsLike}°C</Text>
+      </View>
     </View>
   );
 };
@@ -30,13 +55,16 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  temperatureContainer: {
+    alignItems: 'center',
+  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 45,
     color: '#666',
     marginBottom: 8,
   },

@@ -11,9 +11,8 @@ const LoadingSpinner = ({ visible = false, text = "Loading..." }) => {
   return (
     <View style={styles.container}>
       <View style={styles.spinner}>
-        <ActivityIndicator size="large" color="#ff6b6b" />
+        <ActivityIndicator size="large" color="#0091ffff" />
         <Text style={styles.text}>{text}</Text>
-        <Text style={styles.subtitle}>Developer 1: API Integration & Progress Management</Text>
       </View>
     </View>
   );
