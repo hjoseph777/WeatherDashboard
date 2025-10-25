@@ -12,6 +12,7 @@ import WeatherCard from "../components/WeatherCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import WeatherAPI from '../services/weatherAPI';
 import CustomButton from "../components/CustomButton";
+import ForecastScreen from "./ForecastScreen";
 
 export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,17 +73,13 @@ export default function HomeScreen({ navigation }) {
           
         <WeatherCard weatherData={weatherData}/>
           
+        <ForecastScreen />
+  
         <CustomButton 
           title="Refresh Weather" 
           onPress={handleRefresh}
         />
-          
-        <CustomButton 
-          title="View Forecast" 
-          onPress={() => navigation.navigate('Forecast')}
-          style={{ backgroundColor: '#45b7d1' }}
-        />
-          
+                    
         <CustomButton 
           title="Saved Locations" 
           onPress={() => navigation.navigate('SavedLocations')}

@@ -4,7 +4,7 @@
  */
 
 // TODO: Replace with your weather API key
-const API_KEY = 'a4878a7864bd429e827183105252410';
+const API_KEY = '613a17f2011042e8be202312252510';
 const BASE_URL = 'http://api.weatherapi.com/v1';
 
 class WeatherAPI {
@@ -107,6 +107,7 @@ class WeatherAPI {
         data: dailyForecast.map(day => ({
           date: day.date, // get date of the forecast
           temperature: Math.round(day.day.avgtemp_c), // get average temperature in Celsius
+          feelsLike: Math.round(day.day.avgtemp_c), // get feels like temperature
           description: day.day.condition.text, // get weather description
           icon: day.day.condition.icon, // get weather icon URL
         }))
