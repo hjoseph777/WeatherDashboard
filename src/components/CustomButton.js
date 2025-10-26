@@ -32,7 +32,7 @@ const CustomButton = ({ title, onPress, style }) => {
         activeOpacity={0.8}
       >
         <Text style={styles.buttonText}>{title || 'Custom Button'}</Text>
-        <Text style={styles.subtitle}>Developer 2: Interactive Components & Gestures</Text>
+        {/* <Text style={styles.subtitle}>Developer 2: Interactive Components & Gestures</Text> */}
       </TouchableOpacity>
     </Animated.View>
   );

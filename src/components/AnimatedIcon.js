@@ -59,7 +59,7 @@ const AnimatedIcon = ({ iconName = "☀️", animationType = "bounce" }) => {
       <Animated.Text style={[styles.icon, animatedStyle]}>
         {iconName}
       </Animated.Text>
-      <Text style={styles.subtitle}>Developer 3: Modals, Notifications & Animations</Text>
+      {/* <Text style={styles.subtitle}>Developer 3: Modals, Notifications & Animations</Text> */}
     </View>
   );
 };
