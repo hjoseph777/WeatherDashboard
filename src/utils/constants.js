@@ -14,7 +14,7 @@ export const API_CONFIG = {
 // Developer Color Coding (matching ProjectTask.md)
 export const DEVELOPER_COLORS = {
   DEVELOPER_1: '#ff6b6b', // Red/Coral - API Integration & Progress Management
-  DEVELOPER_2: '#4ecdc4', // Teal/Turquoise - Interactive Components & Gestures
+  DEVELOPER_2: '#4a6361ff', // Teal/Turquoise - Interactive Components & Gestures
   DEVELOPER_3: '#45b7d1', // Blue - Modals, Notifications & Animations
   DEVELOPER_4: '#f7b731', // Orange/Gold - Navigation & Project Documentation
 };

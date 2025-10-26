@@ -80,11 +80,11 @@ export default function HomeScreen({ navigation }) {
           onPress={handleRefresh}
         />
                     
-        <CustomButton 
+        {/* <CustomButton 
           title="Saved Locations" 
           onPress={() => navigation.navigate('SavedLocations')}
           style={{ backgroundColor: '#f7b731' }}
-        />
+        /> */}
       </ScrollView>
       <LoadingSpinner visible={isLoading} text="Fetching weather data..." />
     </View>
