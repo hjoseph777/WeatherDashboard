@@ -38,7 +38,7 @@ class WeatherAPI {
         if (response.status === 401) {
           throw new Error('Invalid API key.');
         }
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! sggggtatus: ${response.status}`);
       }
       
       // parse JSON data
@@ -104,13 +104,15 @@ class WeatherAPI {
       
       return {
         success: true,
-        data: dailyForecast.map(day => ({
-          date: day.date, // get date of the forecast
-          temperature: Math.round(day.day.avgtemp_c), // get average temperature in Celsius
-          feelsLike: Math.round(day.day.avgtemp_c), // get feels like temperature
-          description: day.day.condition.text, // get weather description
-          icon: day.day.condition.icon, // get weather icon URL
-        }))
+data: dailyForecast.map(day => ({
+  date: day.date,
+  temperature: Math.round(day.day.avgtemp_c),
+  humidity: day.day.avghumidity,
+  windSpeed: Math.round(day.day.maxwind_kph),
+  description: day.day.condition.text,
+  icon: day.day.condition.icon,
+}))
+
       };
     } catch (error) {
       console.error('Error fetching forecast:', error);

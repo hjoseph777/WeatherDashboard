@@ -89,6 +89,11 @@ const ForecastScreen = ({ navigation, route }) => {
                 <Text style={styles.day}>{formatDay(item.date, index)}</Text>
                 <Text style={styles.temp}>{item.temperature}°C</Text>
               </View>
+              <View style={styles.detailsRow}>
+  <Text style={styles.details}>💧 {item.humidity}%</Text>
+  <Text style={styles.details}>💨 {item.windSpeed} km/h</Text>
+</View>
+
             </View>
         ))) : (
           <Text>No forecast data available</Text>
