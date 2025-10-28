@@ -83,7 +83,7 @@ class WeatherAPI {
 
       // get encoded city name for URL
       const encodedCity = encodeURIComponent(city);
-      const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${city}}&days=7&aqi=no&alerts=no`;
+      const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`;
       
       console.log('Fetching forecast data from URL:', url);
 
@@ -97,7 +97,7 @@ class WeatherAPI {
       
       // parse JSON data
       const data = await response.json();
-      console.log('Forecast data received:', data.forcast?.forecastday?.length);
+      console.log('Forecast data received:', data.forecast?.forecastday?.length);
 
       // Process forecast data (one entry per day)
       const dailyForecast = data.forecast.forecastday;
