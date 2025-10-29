@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Import screens
 import HomeScreen from '../screens/HomeScreen';
 import ForecastScreen from '../screens/ForecastScreen';
+import SavedLocationsScreen from '../screens/SavedLocationsScreen';
 // import SavedLocationsScreen from '../screens/SavedLocationsScreen';
 
 /**
@@ -40,11 +41,11 @@ const AppNavigator = () => {
           component={ForecastScreen}
           options={{ title: '5-Day Forecast' }}
         />
-        {/* <Stack.Screen 
+        <Stack.Screen 
           name="SavedLocations" 
           component={SavedLocationsScreen}
           options={{ title: 'Saved Locations' }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

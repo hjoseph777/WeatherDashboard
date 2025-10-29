@@ -4,7 +4,7 @@
  */
 
 // TODO: Replace with your weather API key
-const API_KEY = '613a17f2011042e8be202312252510';
+const API_KEY = '8f3ba7286afd4c79a82184238252810';
 const BASE_URL = 'http://api.weatherapi.com/v1';
 
 class WeatherAPI {
@@ -104,15 +104,14 @@ class WeatherAPI {
       
       return {
         success: true,
-data: dailyForecast.map(day => ({
-  date: day.date,
-  temperature: Math.round(day.day.avgtemp_c),
-  humidity: day.day.avghumidity,
-  windSpeed: Math.round(day.day.maxwind_kph),
-  description: day.day.condition.text,
-  icon: day.day.condition.icon,
-}))
-
+        data: dailyForecast.map(day => ({
+          date: day.date,
+          temperature: Math.round(day.day.avgtemp_c),
+          humidity: day.day.avghumidity,
+          windSpeed: Math.round(day.day.maxwind_kph),
+          description: day.day.condition.text,
+          icon: day.day.condition.icon,
+        }))
       };
     } catch (error) {
       console.error('Error fetching forecast:', error);
@@ -123,47 +122,16 @@ data: dailyForecast.map(day => ({
     }
   }
 
-  /**
-   * Mock data for testing (use when API key is not available)
-   * @param {string} city - City name
-   * @returns {Object} Mock weather data
-   * 
-  static getMockCurrentWeather(city) {
-    return {
-      success: true,
-      data: {
-        city: city,
-        country: 'Test',
-        temperature: 22,
-        description: 'Partly cloudy',
-        humidity: 65,
-        windSpeed: 5.2,
-        icon: '02d',
-      }
-    };
+  // add location to saved list
+  static async addLocation(city) {
+    return await this.getCurrentWeather(city);
+    console.log('Adding location:', city);
   }
 
-  /**
-   * Mock forecast data for testing
-   * @param {string} city - City name
-   * @returns {Object} Mock forecast data
-   *
-  static getMockForecast(city) {
-    return {
-      success: true,
-      data: [
-        { date: 'Today', temperature: 22, description: 'Sunny', icon: '01d' },
-        { date: 'Tomorrow', temperature: 19, description: 'Cloudy', icon: '02d' },
-        { date: 'Wed', temperature: 16, description: 'Rainy', icon: '09d' },
-        { date: 'Thu', temperature: 18, description: 'Partly cloudy', icon: '02d' },
-        { date: 'Fri', temperature: 21, description: 'Sunny', icon: '01d' },
-      ]
-    };
-  } */
+  // remove location from saved list
+  static async removeLocation(city) {
+    return
+  }
 }
 
 export default WeatherAPI;
-
-// Usage examples:
-// const weather = await WeatherAPI.getCurrentWeather('Toronto');
-// const forecast = await WeatherAPI.getForecast('Toronto');

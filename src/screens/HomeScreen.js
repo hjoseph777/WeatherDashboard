@@ -12,7 +12,6 @@ import WeatherCard from "../components/WeatherCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import WeatherAPI from '../services/weatherAPI';
 import CustomButton from "../components/CustomButton";
-import ForecastScreen from "./ForecastScreen";
 
 export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,12 +57,6 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-  /* simple city selection without navigation
-  const handleQuickCityChange = (city) => {
-    setCurrentCity(city);
-    loadWeatherData(city);
-  };*/
-
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -72,19 +65,23 @@ export default function HomeScreen({ navigation }) {
         <AnimatedIcon iconName="🌤️" animationType="bounce" />
           
         <WeatherCard weatherData={weatherData}/>
-          
-        <ForecastScreen />
-  
+            
         <CustomButton 
           title="Refresh Weather" 
           onPress={handleRefresh}
         />
+
+        <CustomButton 
+          title="5-Day Forecast" 
+          onPress={() => navigation.navigate('Forecast', { city: currentCity })}
+          style={{ backgroundColor: '#00b4d8' }}
+        />
                     
-        {/* <CustomButton 
+        <CustomButton 
           title="Saved Locations" 
           onPress={() => navigation.navigate('SavedLocations')}
           style={{ backgroundColor: '#f7b731' }}
-        /> */}
+        />
       </ScrollView>
       <LoadingSpinner visible={isLoading} text="Fetching weather data..." />
     </View>

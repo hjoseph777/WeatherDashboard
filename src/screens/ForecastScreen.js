@@ -90,14 +90,18 @@ const ForecastScreen = ({ navigation, route }) => {
                 <Text style={styles.temp}>{item.temperature}°C</Text>
               </View>
               <View style={styles.detailsRow}>
-  <Text style={styles.details}>💧 {item.humidity}%</Text>
-  <Text style={styles.details}>💨 {item.windSpeed} km/h</Text>
-</View>
-
+                <Text style={styles.details}>💧 {item.humidity}%</Text>
+                <Text style={styles.details}>💨 {item.windSpeed} km/h</Text>
+              </View>
             </View>
         ))) : (
           <Text>No forecast data available</Text>
         )}
+        {/*<CustomButton
+          title="Refresh"
+          onPress={() => handleRefreshLocation(location.city)}
+          style={styles.refreshButton}
+        />*/}
       </ScrollView>
     </View>
   );
