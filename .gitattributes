@@ -21,7 +21,7 @@
 # VS Code settings - ensure team consistency
 .vscode/* text eol=lf
 
-# Expo and React Native files
+# Expo and React Native filess
 *.expo text eol=lf
 expo.json text eol=lf
 app.json text eol=lf
