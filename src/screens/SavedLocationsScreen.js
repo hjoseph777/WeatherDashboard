@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import WeatherAPI from '../services/weatherAPI';
 import Storage from '../services/storage';
-//import { timeStamp } from 'node:console';
 
-/**
-* SavedLocationsScreen - Favorite locations list
-*/
 
 const SavedLocationsScreen = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -19,17 +15,16 @@ const SavedLocationsScreen = () => {
     useEffect(() => {
         loadSavedLocations();
     }, []);
-    
+
     const loadSavedLocations = async () => {
         try {
             setIsLoading(true);
             setError(null);
             console.log('Loading saved locations...');
 
-            // get saved locations from storage
             const result = await Storage.getSavedLocations();
             console.log('Saved locations:', result);
-            
+
             if (result.success) {
                 setSavedLocations(result.data);
             } else {
@@ -42,56 +37,50 @@ const SavedLocationsScreen = () => {
             setIsLoading(false);
         }
     };
-    
+
     // handle adding a new location
     const handleAddLocation = async () => {
-    
-        // check for location name
-        if (!newLocation.trim()) {
+        const locationName = newLocation.trim();
+
+        if (!locationName) {
             Alert.alert('Error', 'Please enter a valid city name.');
+            return;
+        }
+
+        // check if already saved
+        if (savedLocations.some(loc => loc.city.toLowerCase() === locationName.toLowerCase())) {
+            Alert.alert('Info', `${locationName} is already in your saved locations.`);
             return;
         }
 
         try {
             setIsLoading(true);
 
-            // verify the city exists in the API
-            const result = await WeatherAPI.getCurrentWeather(newLocation.trim());
+            const result = await WeatherAPI.getCurrentWeather(locationName);
             console.log('Weather API result:', result);
 
-            // check if location already exists
-            if (savedLocations.some(loc => loc.city.toLowerCase() === locationName.toLowerCase())) {
-                Alert.alert('Info', `${locationName} is already in your saved locations.`);
-                return;
-            }
-
-            // create the new weather location
             if (result.success) {
-                const locationName = newLocation.trim();
-            
-                // create weather data for new location using the API response
                 const newLocationData = {
-                    id: Date.now().toString(), // unique ID for the location
+                    id: Date.now().toString(),
                     city: result.data.city,
                     country: result.data.country,
                     temperature: result.data.temperature,
                     feelsLike: result.data.feelsLike,
                     description: result.data.description,
-                    humidity: result.data.humidity,
-                    windSpeed: result.data.windSpeed,
                     icon: result.data.icon,
                 };
 
-                // save to storage
                 const updateLocations = await Storage.addSavedLocation(newLocationData);
 
                 if (updateLocations.success) {
-                    await loadSavedLocations();
+                    await loadSavedLocations(); // reload list after adding
                     setNewLocation('');
                     Alert.alert('Success', `${locationName} has been added to your saved locations.`);
                 } else {
-                    Alert.alert('Error', result.error || 'Failed to add location. City may not exist.');
+                    Alert.alert('Error', result.error || 'Failed to add location.');
                 }
+            } else {
+                Alert.alert('Error', result.error || 'Failed to fetch city.');
             }
         } catch (error) {
             console.error('Error adding location:', error);
@@ -99,8 +88,8 @@ const SavedLocationsScreen = () => {
         } finally {
             setIsLoading(false);
         }
-    }
-    
+    };
+
     // handle removing a location
     const handleRemoveLocation = async (city) => {
         Alert.alert(
@@ -108,16 +97,26 @@ const SavedLocationsScreen = () => {
             `Are you sure you want to delete ${city}?`,
             [
                 { text: "Cancel", style: "cancel" },
-                { text: "Remove",
+                {
+                    text: "Remove",
                     onPress: async () => {
                         try {
                             setIsLoading(true);
                             console.log(`${city} removed!`);
 
-                            // reload saved locations
-                            await loadSavedLocations();
+                            // remove the city from storage
+                            const result = await Storage.removeSavedLocation(city);
+                            if (result.success) {
+                                const refreshed = await Storage.getSavedLocations();
+                                if (refreshed.success) {
+                                    setSavedLocations(refreshed.data);
+                                }
+                                Alert.alert('Success', `${city} removed.`);
+                            } else {
+                                Alert.alert('Error', result.error || 'Failed to remove location.');
+                            }
                         } catch (error) {
-                            console.erre('Error removing location', error);
+                            console.error('Error removing location', error);
                         } finally {
                             setIsLoading(false);
                         }
@@ -127,37 +126,6 @@ const SavedLocationsScreen = () => {
             ]
         );
     };
-
-    /*/ handle refreshing location weather data
-    const handleRefreshLocation = async (city) => {
-        try {
-            setIsLoading(true);
-            const result = await WeatherAPI.getCurrentWeather(city);
-            
-            if (result.success) {
-                const updateLocations = savedLocations.map(location => 
-                    location.city === city 
-                        ? {
-                            ...location,
-                            temperature: result.data.temperature,
-                            feelsLike: result.data.feelsLike,
-                            description: result.data.description,
-                            country: result.data.country
-                        }
-                        : location
-                );
-                setSavedLocations(updatedLocations);
-                Alert.alert('Success', `Weather data for ${city} has been updated.`);
-            } else {
-                Alert.alert('Error', `Failed to update weather data for ${city}.`);
-            }
-        } catch (error) {
-            console.error('Error refreshing location:', error);
-            Alert.alert('Error', 'Failed to refresh weather data.');
-        } finally {
-            setIsLoading(false);
-        }
-    };*/
 
     // refresh weather data
     const handleRefresh = async () => {
@@ -169,47 +137,25 @@ const SavedLocationsScreen = () => {
                 savedLocations.map(async (location) => {
                     try {
                         const weatherResult = await WeatherAPI.getCurrentWeather(location.city);
-                        
                         if (weatherResult.success) {
-                            // Update cache with new data
-                            await StorageService.cacheWeatherData(location.city, {
-                                temperature: weatherResult.data.temperature,
-                                feelsLike: weatherResult.data.feelsLike,
-                                description: weatherResult.data.description,
-                                humidity: weatherResult.data.humidity,
-                                windSpeed: weatherResult.data.windSpeed,
-                                icon: weatherResult.data.icon
-                            });
-                            
                             return {
                                 ...location,
                                 temperature: weatherResult.data.temperature,
                                 feelsLike: weatherResult.data.feelsLike,
                                 description: weatherResult.data.description,
-                                humidity: weatherResult.data.humidity,
-                                windSpeed: weatherResult.data.windSpeed,
-                                icon: weatherResult.data.icon,
-                                error: null
+                                country: weatherResult.data.country
                             };
                         } else {
-                            console.warn(`Failed to refresh weather for ${location.city}:`, weatherResult.error);
-                            return {
-                                ...location,
-                                error: weatherResult.error
-                            };
+                            return location;
                         }
                     } catch (error) {
                         console.error(`Error refreshing weather for ${location.city}:`, error);
-                        return {
-                            ...location,
-                            error: error.message
-                        };
+                        return location;
                     }
                 })
             );
 
             setSavedLocations(updatedLocations);
-            
             Alert.alert('Success', 'All weather data has been refreshed.');
         } catch (error) {
             console.error('Error refreshing all weather data:', error);
@@ -230,17 +176,17 @@ const SavedLocationsScreen = () => {
                     value={newLocation}
                     onChangeText={setNewLocation}
                 />
-                <CustomButton 
-                    title="Add Location" 
-                    onPress={handleAddLocation} 
+                <CustomButton
+                    title="Add Location"
+                    onPress={handleAddLocation}
                     loading={isLoading}
                     style={{ marginTop: 10, backgroundColor: '#0077b6' }}
                 />
             </View>
 
-            <CustomButton 
-            title="Refresh Weather" 
-            onPress={handleRefresh}
+            <CustomButton
+                title="Refresh Weather"
+                onPress={handleRefresh}
             />
 
             <ScrollView style={styles.locationsList}>
@@ -254,7 +200,6 @@ const SavedLocationsScreen = () => {
                                 <Text style={styles.weather}>{location.temperature}°C</Text>
                                 <Text style={styles.description}>{location.description}</Text>
                                 <Text style={styles.feelsLike}>Feels like: {location.feelsLike}°C</Text>
-                                <Text style={styles.lastUpdated}>{location.lastUpdated}</Text>
                             </View>
                             <CustomButton
                                 title="Remove"
