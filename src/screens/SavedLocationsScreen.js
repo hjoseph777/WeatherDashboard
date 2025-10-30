@@ -91,37 +91,32 @@ const SavedLocationsScreen = () => {
     };
 
     // handle removing a location
-    const handleRemoveLocation = async (city) => {
+    const handleRemoveLocation = async (locationId) => {
         Alert.alert(
             "Remove Location",
-            `Are you sure you want to delete ${city}?`,
+            "Are you sure you want to delete this location?",
             [
                 { text: "Cancel", style: "cancel" },
                 {
                     text: "Remove",
+                    style: "destructive",
                     onPress: async () => {
                         try {
                             setIsLoading(true);
-                            console.log(`${city} removed!`);
-
-                            // remove the city from storage
-                            const result = await Storage.removeSavedLocation(city);
+                            const result = await Storage.removeSavedLocation(locationId);
                             if (result.success) {
                                 const refreshed = await Storage.getSavedLocations();
-                                if (refreshed.success) {
-                                    setSavedLocations(refreshed.data);
-                                }
-                                Alert.alert('Success', `${city} removed.`);
+                                if (refreshed.success) setSavedLocations(refreshed.data);
+                                Alert.alert("Success", "Location removed.");
                             } else {
-                                Alert.alert('Error', result.error || 'Failed to remove location.');
+                                Alert.alert("Error", result.error || "Failed to remove location.");
                             }
                         } catch (error) {
-                            console.error('Error removing location', error);
+                            console.error("Error removing location:", error);
                         } finally {
                             setIsLoading(false);
                         }
                     },
-                    style: "destructive",
                 },
             ]
         );
@@ -203,7 +198,7 @@ const SavedLocationsScreen = () => {
                             </View>
                             <CustomButton
                                 title="Remove"
-                                onPress={() => handleRemoveLocation(location.city)}
+                                onPress={() => handleRemoveLocation(location.id)}
                                 style={styles.removeButton}
                             />
                         </View>
