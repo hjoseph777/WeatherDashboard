@@ -81,7 +81,7 @@ const ForecastScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>5-Day Forecast for {city}</Text>
+        <Text style={styles.title}>3-Day Forecast for {city}</Text>
         
           {forecastData ? ( forecastData.slice(0, 5).map((item, index) => (
             <View key={index} style={styles.forecastItem}>
