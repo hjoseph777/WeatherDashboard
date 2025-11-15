@@ -39,7 +39,7 @@ const AppNavigator = () => {
         <Stack.Screen 
           name="Forecast" 
           component={ForecastScreen}
-          options={{ title: '5-Day Forecast' }}
+          options={{ title: '3-Day Forecast' }}
         />
         <Stack.Screen 
           name="SavedLocations" 
