@@ -72,7 +72,7 @@ export default function HomeScreen({ navigation }) {
         />
 
         <CustomButton 
-          title="5-Day Forecast" 
+          title="3-Day Forecast" 
           onPress={() => navigation.navigate('Forecast', { city: currentCity })}
           style={{ backgroundColor: '#00b4d8' }}
         />
