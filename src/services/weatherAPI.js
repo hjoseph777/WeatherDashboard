@@ -38,7 +38,7 @@ class WeatherAPI {
         if (response.status === 401) {
           throw new Error('Invalid API key.');
         }
-        throw new Error(`HTTP error! sggggtatus: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       // parse JSON data
@@ -67,7 +67,7 @@ class WeatherAPI {
   }
 
   /**
-   * Get 5-day weather forecast for a city
+   * Get 3-day weather forecast for a city
    * @param {string} city - City name
    * @returns {Promise<Object>} Forecast data
    */
