@@ -1,16 +1,30 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, View, Text, StyleSheet } from 'react-native';
+import { Animated, View, Text, StyleSheet, Easing } from 'react-native'; // <--- Added Easing here
 
 /**
  * AnimatedIcon Component - Developer 3: Animated weather icons
  * This component creates animated weather icons with spring/timing animations
  */
 const AnimatedIcon = ({ iconName = "☀️", animationType = "bounce" }) => {
+  // 1. Existing Value (Scale/Opacity)
   const animatedValue = useRef(new Animated.Value(0)).current;
+  
+  // 2. NEW Value (Rotation)
+  const animatedRotation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    // --- ROTATION ANIMATION ---
+    Animated.loop(
+      Animated.timing(animatedRotation, {
+        toValue: 1,
+        duration: 5000, // 5 seconds
+        easing: Easing.linear, 
+        useNativeDriver: true,
+      })
+    ).start();
+
+    // --- BOUNCE/FADE ANIMATION  ---
     if (animationType === "bounce") {
-      // Spring animation for bouncing effect
       Animated.loop(
         Animated.sequence([
           Animated.spring(animatedValue, {
@@ -28,7 +42,6 @@ const AnimatedIcon = ({ iconName = "☀️", animationType = "bounce" }) => {
         ])
       ).start();
     } else {
-      // Timing animation for fade effect
       Animated.loop(
         Animated.timing(animatedValue, {
           toValue: 1,
@@ -37,21 +50,31 @@ const AnimatedIcon = ({ iconName = "☀️", animationType = "bounce" }) => {
         })
       ).start();
     }
-  }, [animationType]);
+  }, [animationType]); // Dependencies
 
+  // Define Interpolations
+  const scaleInterpolation = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.2],
+  });
+
+  const opacityInterpolation = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.7, 1],
+  });
+
+  const rotateInterpolation = animatedRotation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
+  // Apply styles
   const animatedStyle = {
+    opacity: opacityInterpolation,
     transform: [
-      {
-        scale: animatedValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [1, 1.2],
-        }),
-      },
+      { scale: scaleInterpolation },
+      { rotate: rotateInterpolation } 
     ],
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0.7, 1],
-    }),
   };
 
   return (
