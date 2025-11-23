@@ -4,17 +4,12 @@
 
 </div>
 
-## 📋 **Priority Documentation Links**
-
-> **⚠️ DEVELOPERS: Read these documents first for detailed project information**
-
 | 🎯 **Priority** | 📄 **Document** | 📝 **Description** |
 |:--------------:|:---------------|:------------------|
 | **1 - CRITICAL** | [📋 **ProjectTask.md**](./ProjectInfo/ProjectTask.md) | **Complete developer assignments & task breakdown** |
 | **2 - SETUP** | [🚀 **TEAM_SETUP_GUIDE.md**](./ProjectInfo/TEAM_SETUP_GUIDE.md) | **Required versions & installation steps** |
 | **3 - STRUCTURE** | [📁 **PROJECT_STRUCTURE_COMPLETE.md**](./ProjectInfo/PROJECT_STRUCTURE_COMPLETE.md) | **File organization & developer focus areas** |
 | **4 - REFERENCE** | [🏗️ **RECOMMENDED_STRUCTURE.md**](./ProjectInfo/RECOMMENDED_STRUCTURE.md) | **Architecture decisions & best practices** |
-| **5 - THEME** | [🌃 **TOKYO_NIGHT_SETUP.md**](./TOKYO_NIGHT_SETUP.md) | **Tokyo Night theme setup & team configuration** |
 
 ---
 
