@@ -10,35 +10,57 @@ const LoadingBar = ({
     min = 0, 
     backColor = "#FFFFFF", 
     barColor = "#00ccffff",
-    borderColor = "transparent"
+    borderColor = "transparent",
+    indeterminate = false
 }) => {
     
     // progress bar animation
     const progressAnimation = useRef(new Animated.Value(min)).current;
 
-    useEffect(() => {
-        let adjustedProgress = progress;
-        if (adjustedProgress > max) {
-            adjustedProgress = max;
-        }
+    // loading animation (continuous loading)
+     useEffect(() => {
+        if (!indeterminate || !visible) return;
 
-        Animated.timing(progressAnimation, {
-            toValue: progress,
-            duration: 500,
-            useNativeDriver: false
-        }).start();
-    }, [progressAnimation, progress, max]);
+        // bar animation
+        const barAnimation = Animated.loop(
+            Animated.sequence([
+                // Move bar from left to right
+                Animated.timing(progressAnimation, {
+                    toValue: 100,
+                    duration: 2500,
+                    useNativeDriver: false
+                }),
+                // Reset bar to start
+                Animated.timing(progressAnimation, {
+                    toValue: 0,
+                    duration: 0,
+                    useNativeDriver: false
+                }),
+            ])
+        );
+        barAnimation.start();
 
+        // stops animation when content loads
+        return () => {
+            barAnimation.stop();
+        };
+    }, [indeterminate, visible]);
+
+    // if not visible, don't render
     if (!visible) return null;
+
+    // progress value to width percentage
+    const widthInterpolated = progressAnimation.interpolate({
+        inputRange: [min, max],
+        outputRange: ["0%", "60%"] // Output range (0% width to 100% width)
+    });
 
     return (
         <View style={[styles.container, {backgroundColor: backColor, borderColor: borderColor}]}>
             <View style={styles.content}>
                 <Text style={styles.text}>{text}</Text>
-                <Animated.View style={[styles.bar, {width:progressAnimation.interpolate({
-                    inputRange:[min, max], 
-                    outputRange:["0%", "100%"]
-                }),
+                <Animated.View style={[styles.bar, {
+                    width: indeterminate ? widthInterpolated : widthInterpolated,
                     backgroundColor: barColor
                 }]}></Animated.View>
             </View>
@@ -61,7 +83,7 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: '#fff',
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 6,
         alignItems: 'center',
         minWidth: 200,
     },
@@ -76,9 +98,9 @@ const styles = StyleSheet.create({
         left: 0, 
         bottom: 0, 
         right: 0,
-        height: 20,
+        height: 6,
         borderWidth: 0,
-        borderRadius: 9
+        borderRadius: 10,
     },
 });
 

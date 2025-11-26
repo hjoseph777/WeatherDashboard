@@ -83,7 +83,7 @@ export default function HomeScreen({ navigation }) {
           style={{ backgroundColor: '#f7b731' }}
         />
       </ScrollView>
-      <LoadingBar visible={isLoading} text="Fetching weather data..." />
+      <LoadingBar visible={isLoading} text="Fetching weather data..." indeterminate={true} barColor="#007AFF" backColor="rgba(0,0,0,0.7)"/>
     </View>
   );
 }
