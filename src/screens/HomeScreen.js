@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import AnimatedIcon from "../components/AnimatedIcon";
 import WeatherCard from "../components/WeatherCard";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingBar from "../components/LoadingBar";
 import WeatherAPI from '../services/weatherAPI';
 import CustomButton from "../components/CustomButton";
 
@@ -83,7 +83,7 @@ export default function HomeScreen({ navigation }) {
           style={{ backgroundColor: '#f7b731' }}
         />
       </ScrollView>
-      <LoadingSpinner visible={isLoading} text="Fetching weather data..." />
+      <LoadingBar visible={isLoading} text="Fetching weather data..." />
     </View>
   );
 }

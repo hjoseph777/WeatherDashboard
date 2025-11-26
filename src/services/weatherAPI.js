@@ -1,18 +1,9 @@
-/**
- * Weather API Service - Developer 1: API Integration & Progress Management
- * This service handles all weather data fetching from OpenWeatherMap API
- */
-
-// TODO: Replace with your weather API key
+/* This service handles all weather data fetching from OpenWeatherMap API */
 const API_KEY = '8f3ba7286afd4c79a82184238252810';
 const BASE_URL = 'http://api.weatherapi.com/v1';
 
+// Get current weather data for a city
 class WeatherAPI {
-  /**
-   * Get current weather data for a city
-   * @param {string} city - City name
-   * @returns {Promise<Object>} Weather data
-   */
   static async getCurrentWeather(city) {
     try {
       // get current city
@@ -66,11 +57,7 @@ class WeatherAPI {
     }
   }
 
-  /**
-   * Get 3-day weather forecast for a city
-   * @param {string} city - City name
-   * @returns {Promise<Object>} Forecast data
-   */
+  /* Get 3-day weather forecast for a city */
   static async getForecast(city, days = 5) {
     try {
       // get forecast for city
