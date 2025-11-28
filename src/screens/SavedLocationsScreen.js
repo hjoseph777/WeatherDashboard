@@ -19,8 +19,8 @@ const SavedLocationsScreen = () => {
     const position = useRef(new Animated.Value(0)).current; 
     const pan = useRef(new Animated.Value(0)).current; 
 
-    const getTranslateX = () => Animated.add(position, pan); 
-    
+    const translateX = useRef(new Animated.Value(0)).current;
+
     const panResponder = useRef(
         PanResponder.create({
             onMoveShouldSetPanResponder: (_, gestureState) => {
@@ -29,77 +29,60 @@ const SavedLocationsScreen = () => {
             },
             
             onPanResponderGrant: () => {
-                position.stopAnimation();
-                position.extractOffset(); 
-                pan.setValue(0); 
+                translateX.stopAnimation();
             },
             
-            onPanResponderMove: Animated.event(
-                [
-                    null,
-                    { dx: pan }
-                ],
-                { useNativeDriver: true } 
-            ),
+            onPanResponderMove: (_, gestureState) => {
+                // control the translation based on gesture
+                const newX = showTomorrow ? (-VIEW_WIDTH + gestureState.dx) : gestureState.dx;
+                translateX.setValue(newX);
+            },
             
             onPanResponderRelease: (_, gestureState) => {
                 const { dx, vx } = gestureState;
-                const swipeThreshold = VIEW_WIDTH * 0.4;
-                const velocityThreshold = 0.5;
-
-                const currentX = position._value + dx; 
+                const swipeThreshold = VIEW_WIDTH * 0.2;
                 
-                let targetValue = 0; 
+                let targetValue = 0;
                 
-                if (currentX > -VIEW_WIDTH / 2) {
-                    if (dx < -swipeThreshold || vx < -velocityThreshold) {
-                        targetValue = -VIEW_WIDTH;
-                    } else {
-                        targetValue = 0;
-                    }
+                if (showTomorrow) {
+                    // swipe right to go back to today
+                    targetValue = (dx > swipeThreshold || vx > 0.3) ? 0 : -VIEW_WIDTH;
                 } else {
-                    if (dx > swipeThreshold || vx > velocityThreshold) {
-                        targetValue = 0;
-                    } else {
-                        targetValue = -VIEW_WIDTH;
-                    }
+                    // Swipe left to go to tomorrow
+                    targetValue = (dx < -swipeThreshold || vx < -0.3) ? -VIEW_WIDTH : 0;
                 }
 
-                Animated.spring(position, {
+                // update state instantly based on target value
+                const shouldBeShowingTomorrow = targetValue !== 0;
+                setShowTomorrow(shouldBeShowingTomorrow);
+
+                Animated.spring(translateX, {
                     toValue: targetValue,
                     useNativeDriver: true,
-                    velocity: vx, 
-                    tension: 40,
-                    friction: 12,
+                    tension: 50,
+                    friction: 7,
                 }).start(() => {
-                    position.setValue(targetValue);
-                    position.flattenOffset();
-                    
-                    const shouldBeShowingTomorrow = targetValue !== 0;
-                    setShowTomorrow(shouldBeShowingTomorrow);
                     if (shouldBeShowingTomorrow && tomorrowForecasts.length === 0) {
                         fetchTomorrowForecasts();
                     }
                 });
-                
-                pan.setValue(0);
             },
-
+            
             onPanResponderTerminate: () => {
-                position.flattenOffset();
-                pan.setValue(0);
+                // snap back to current state if gesture is interrupted
                 const targetValue = showTomorrow ? -VIEW_WIDTH : 0;
-                Animated.spring(position, {
+                Animated.spring(translateX, {
                     toValue: targetValue,
                     useNativeDriver: true,
-                    tension: 40,
-                    friction: 12,
+                    tension: 50,
+                    friction: 7,
                 }).start();
             },
+            
             onPanResponderTerminationRequest: () => true,
         })
     ).current;
-    
+
     const fetchTomorrowForecasts = async () => {
         if (savedLocations.length === 0) return;
 
@@ -296,25 +279,12 @@ const SavedLocationsScreen = () => {
     );
 
     const currentViewStyle = {
-        transform: [{
-            translateX: getTranslateX().interpolate({
-                inputRange: [-VIEW_WIDTH, 0],
-                outputRange: [-VIEW_WIDTH, 0],
-                extrapolate: 'clamp'
-            })
-        }]
+        transform: [{ translateX }]
     };
 
     const tomorrowViewStyle = {
-        transform: [{
-            translateX: getTranslateX().interpolate({
-                inputRange: [-VIEW_WIDTH, 0],
-                outputRange: [0, VIEW_WIDTH],
-                extrapolate: 'clamp'
-            })
-        }]
+        transform: [{ translateX: Animated.add(translateX, VIEW_WIDTH) }]
     };
-
 
     return (
         <View style={styles.container}>
