@@ -3,11 +3,6 @@
   "outputDirectory": "dist",
   "devCommand": "expo start --web",
   "framework": null,
-  "functions": {
-    "api/weather.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",
