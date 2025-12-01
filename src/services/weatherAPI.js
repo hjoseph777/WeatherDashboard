@@ -1,6 +1,7 @@
-/* This service handles all weather data fetching from OpenWeatherMap API */
-const API_KEY = '8f3ba7286afd4c79a82184238252810';
-const BASE_URL = 'http://api.weatherapi.com/v1';
+/* This service handles all weather data fetching from our Vercel API endpoint */
+const BASE_URL = process.env.NODE_ENV === 'production' 
+  ? '/api/weather' 
+  : '/api/weather'; // For local development, you can use: 'http://localhost:3000/api/weather'
 
 // Get current weather data for a city
 class WeatherAPI {
@@ -9,17 +10,12 @@ class WeatherAPI {
       // get current city
       console.log('Fetching weather for city:', city);
 
-      // if unable to fetch from API
-      if (!API_KEY) {
-        throw new Error('API key is missing. Please check API key.');
-      }
-
       // get encoded city name for URL
       const encodedCity = encodeURIComponent(city);
       
-      // url to fetch weather data
-      const url = `${BASE_URL}/current.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`;
-      console.log('Fetching weather data from URL:', url);
+      // url to fetch weather data from our Vercel API
+      const url = `${BASE_URL}?city=${encodedCity}&type=current`;
+      console.log('Fetching weather data from API endpoint:', url);
 
       // fetching data from API status
       const response = await fetch(url);
@@ -63,16 +59,11 @@ class WeatherAPI {
       // get forecast for city
       console.log('Fetching forecast for city:', city);
 
-      // if unable to fetch from API
-      if (!API_KEY) {
-        throw new Error('API key is missing. Please check API key.');
-      }
-
       // get encoded city name for URL
       const encodedCity = encodeURIComponent(city);
-      const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`;
+      const url = `${BASE_URL}?city=${encodedCity}&type=forecast`;
       
-      console.log('Fetching forecast data from URL:', url);
+      console.log('Fetching forecast data from API endpoint:', url);
 
       // fetching data from API status
       const response = await fetch(url);

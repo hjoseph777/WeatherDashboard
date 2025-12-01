@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPAN 213 Group 14 - Weather Dashboard Project Instructions</title>
+    
+    <style>
+        @page {
+            size: A4;
+            margin: 1in;
+        }
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+        body {
+            font-family: 'Times New Roman', 'Times', serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: #000;
+            max-width: 100%;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+        h4 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin: 15px 0 8px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10pt;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+        pre {
+            font-family: 'Courier New', 'Courier', monospace;
+            font-size: 9pt;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', 'Courier', monospace;
+            font-size: 9pt;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        hr {
+            border: none;
+            height: 2px;
+            background-color: #333;
+            margin: 25px 0;
+        }
+        .page-break {
+            page-break-before: always;
+            margin-top: 50px;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+        }
+        .no-print {
+            background-color: #e3f2fd;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #2196F3;
+            border-radius: 5px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="no-print">
+        <strong>📋 PDF Conversion Instructions:</strong><br>
+        1. Press <kbd>Ctrl+P</kbd> to open print dialog<br>
+        2. Select "Save as PDF" as the destination<br>
+        3. Set margins to "Minimum" or "Custom" with 1-inch margins<br>
+        4. Enable "Print backgrounds" for proper styling<br>
+        5. Save as "Instruction.pdf"
+    </div>
+    
+    <h1>Weather Dashboard - Project Instructions</h1>
+<div align="center">
+
+## **COVER PAGE**
+
+---
+
+### **Application Name:** Weather Dashboard
+### **Group Number:** Group 14
+### **Platform:** React Native with Expo CLI
+
+---
+
+### **Group Members**
+
+| **Role** | **Developer** | **Responsibilities** |
+|----------|---------------|---------------------|
+| **Developer 1** | **Anupa Ragoonanan** | API Integration & Progress Management |
+| **Developer 2** | **Harry Joseph** | Interactive Components & Gestures |
+| **Developer 3** | **Raj Patel** | Modals, Notifications & Animations |
+| **Developer 4** | **Kerlan Augustine** | Navigation & Project Documentation |
+
+---
+
+### **Purpose of the Application**
+
+#### **Who needs your app? And, does "weather" as an application really need to be invented?**
+
+Our Weather Dashboard app fulfills several major demands in today's mobile-first society:
+
+- **Unrestricted Access Need:** Weather information is an indispensable part of daily life planning for all demographics across all geographies
+- **Mobile Convenience:** Increasing number of users want to check weather updates in mobile devices
+- **Better User Experience:** Conventional weather apps are short of impressive user interfaces – our app will feature easy animations with smooth User Interface
+- **Offline Features:** When connectivity is spotty, users still want to be able to access weather information they've recently looked at
+- **Location Tool:** Today users are constantly on the move, and wish to monitor the weather at multiple locations easily
+
+#### **Real-world impact:**
+- Outdoor activities planning for students on campus
+- Professionals scheduling meetings and commutes from home
+- Travelers managing itineraries across multiple cities
+- Families organizing weekend outings and entertainment
+
+---
+
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<hr />
+<h1><strong>PROJECT DETAILS - PAGE 2</strong></h1>
+<hr />
+<h2><strong>Functionalities that we will implement?</strong></h2>
+<h3><strong>Core Weather Features:</strong></h3>
+<ul>
+<li><strong>Real-time Weather Display:</strong> Current temperature, humidity, wind speed, and conditions with automatic location detection</li>
+<li><strong>5-Day Forecast:</strong> Extended predictions with daily ranges and precipitation probability</li>
+<li><strong>Dynamic Animations:</strong> Weather-appropriate animated icons (rain, snow, sunny, cloudy)</li>
+</ul>
+<h3><strong>Interactive Experience:</strong></h3>
+<ul>
+<li><strong>Touch Interactions:</strong> Custom buttons with haptic feedback and smooth animations</li>
+<li><strong>Gesture Navigation:</strong> Pull-to-refresh and swipe transitions between screens</li>
+<li><strong>Progressive Loading:</strong> Visual feedback during API calls with custom spinners</li>
+</ul>
+<h3><strong>Data Management:</strong></h3>
+<ul>
+<li><strong>Location Management:</strong> Save/organize multiple weather locations</li>
+<li><strong>Offline Capability:</strong> Local storage for recent weather data access</li>
+<li><strong>User Preferences:</strong> Persistent app settings and customization options</li>
+</ul>
+<hr />
+<h2><strong>General structure of WeatherDashboard?</strong></h2>
+<pre class="codehilite"><code>WeatherDashboard/
+├── src/screens/          # HomeScreen, ForecastScreen, SavedLocationsScreen
+├── src/components/       # WeatherCard, CustomButton, LoadingSpinner, AnimatedIcon
+├── src/services/         # weatherAPI.js, storage.js (API &amp; data persistence)
+├── src/navigation/       # AppNavigator.js (React Navigation setup)
+└── src/utils/           # constants.js, helpers.js (utilities)
+</code></pre>
+
+<hr />
+<h2><strong>Distribution of functionalities among group members?</strong></h2>
+<h3><strong>Developer 1: Anupa Ragoonanan - API Integration</strong></h3>
+<ul>
+<li>OpenWeatherMap API integration with error handling and validation</li>
+<li>Custom React hooks for weather data management and caching</li>
+<li>Loading spinners and user feedback during API operations</li>
+<li>AsyncStorage wrappers for persistent data and offline capability</li>
+</ul>
+<h3><strong>Developer 2: Harry Joseph - Interactive Components</strong></h3>
+<ul>
+<li>Custom button components with haptic feedback and animations</li>
+<li>Pull-to-refresh functionality and swipe navigation implementation</li>
+<li>Touch responsiveness optimization and reduced latency</li>
+<li>Advanced gesture recognition systems</li>
+</ul>
+<h3><strong>Developer 3: Raj Patel - Animations &amp; Modals</strong></h3>
+<ul>
+<li>Weather-specific animations using React Native's Animated API</li>
+<li>Modal interfaces for detailed weather information and user input</li>
+<li>Notification system for success/error messages and updates</li>
+<li>Visual polish with micro-interactions and transition effects</li>
+</ul>
+<h3><strong>Developer 4: Kerlan Augustine - Navigation &amp; Documentation</strong></h3>
+<ul>
+<li>React Navigation configuration with stack navigation and transitions</li>
+<li>All main application screens development and component integration</li>
+<li>Project coordination, integration testing, and quality assurance</li>
+<li>Documentation preparation and professional video demonstration</li>
+</ul>
+<hr />
+<h2><strong>Development Timeline &amp; Project Phases</strong></h2>
+<h3><strong>PHASE 1 - PROJECT PLANNING (Due: Nov 23, 2025)</strong></h3>
+<ul>
+<li><strong>Deliverable:</strong> Two-page Word document with cover page, purpose, functionalities, structure, and task distribution</li>
+<li><strong>Responsibility:</strong> Kerlan Augustine leads documentation; all members review</li>
+</ul>
+<h3><strong>PHASE 2 - DEVELOPMENT (Due: Dec 1, 2025)</strong></h3>
+<ul>
+<li><strong>Week 1:</strong> Individual component development by each developer</li>
+<li><strong>Week 2:</strong> Integration testing, performance optimization, quality assurance</li>
+<li><strong>Deliverable:</strong> Functional application with documentation and testing evidence</li>
+</ul>
+<h3><strong>PHASE 3 - FINAL SUBMISSION</strong></h3>
+<p><strong>Required Submissions:</strong>
+- <strong>a.</strong> <code>CPAN_213_Group14_Project.zip</code> - Complete project files
+- <strong>b.</strong> Task distribution documentation with individual contributions<br />
+- <strong>c.</strong> 5-minute video presentation (all members participate)
+- <strong>d.</strong> 1-page project report with individual conclusion sections</p>
+<p><strong>Group 14 - Weather Dashboard Development Team</strong></p>
+</body>
+</html>

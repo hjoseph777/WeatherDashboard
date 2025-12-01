@@ -1,0 +1,23 @@
+theme: jekyll-theme-slate
+title: Weather Dashboard - Tokyo Night Experience
+description: React Native Weather Dashboard optimized for Tokyo Night theme development
+
+# Tokyo Night inspired colors for GitHub Pages
+plugins:
+  - jekyll-github-metadata
+
+# Custom styling
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+
+# GitHub Pages configuration  
+repository: WeatherDashboard
+branch: main
+
+# Social links
+github_username: YourUsername
+show_downloads: true

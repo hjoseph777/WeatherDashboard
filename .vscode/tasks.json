@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Convert Markdown to PDF (PrinceXML)",
+            "type": "shell",
+            "command": "python",
+            "args": ["prince_converter.py"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Convert instruction2.md to professional PDF using PrinceXML"
+        },
+        {
+            "label": "Export instruction2_condensed.md to PDF (Prince)",
+            "type": "shell",
+            "command": "\"C:\\Program Files\\Prince\\engine\\bin\\prince.exe\"",
+            "args": [
+                "instruction2_condensed.md",
+                "-o",
+                "instruction2_condensed.pdf",
+                "--verbose"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Direct PrinceXML conversion of instruction2_condensed.md"
+        }
+    ]
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Dashboard - Project Instructions</title>
+    
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+            @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 10pt;
+                color: #666;
+            }
+        }
+        
+        /* Page breaks */
+        h1 { page-break-before: auto; }
+        h2 { page-break-after: avoid; }
+        table { page-break-inside: avoid; }
+        .cover-page { page-break-after: always; }
+        
+        body {
+            font-family: "Calibri", "Arial", sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #000;
+        }
+        
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: #2E86C1;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 16px 0 10px 0;
+            color: #2874A6;
+            border-bottom: 2px solid #E8F6F3;
+            padding-bottom: 4px;
+        }
+        
+        h3 {
+            font-size: 13pt;
+            font-weight: bold;
+            margin: 12px 0 8px 0;
+            color: #1B4F72;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 10pt;
+        }
+        
+        th, td {
+            border: 1px solid #BDC3C7;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #EBF5FB;
+            font-weight: bold;
+            color: #1B4F72;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #F8F9FA;
+        }
+        
+        pre, code {
+            background-color: #F4F6F6;
+            padding: 6px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            font-size: 9pt;
+            border-left: 3px solid #3498DB;
+        }
+        
+        pre {
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 4px 0;
+        }
+        
+        strong {
+            color: #1B4F72;
+            font-weight: bold;
+        }
+        
+        .center, div[align="center"] {
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        /* Emoji support */
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>🌤️ Weather Dashboard - Project Instructions</h1>
+<div align="center">
+
+## **COVER PAGE**
+
+---
+
+### **Application Name:** Weather Dashboard  
+### **Group Number:** Group 14  
+### **Platform:** React Native using Expo CLI
+
+---
+
+### **Group Members**
+
+| **Role** | **Developer** | **Responsibilities** |
+|----------|---------------|---------------------|
+| **Developer 1** | **Anupa Ragoonanan** | API Integration & Progress Management |
+| **Developer 2** | **Harry Joseph** | Interactive Components & Gestures |
+| **Developer 3** | **Raj Patel** | Modals, Notifications & Animations |
+| **Developer 4** | **Kerlan Augustine** | Navigation & Project Documentation |
+
+</div>
+
+<hr />
+<h2><strong>Purpose of the Application</strong></h2>
+<h3><strong>Who Needs This App? Innovation in Weather Applications</strong></h3>
+<p>Our <strong>Weather Dashboard</strong> addresses critical gaps in existing solutions by combining real-time data accuracy with modern UI/UX principles, offline functionality, and personalized interactivity—making it essential for today's mobile users.</p>
+<h3><strong>Core User Needs &amp; Solutions</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Universal Accessibility</strong></td>
+<td>Clear, reliable access to weather data for all users</td>
+</tr>
+<tr>
+<td><strong>Mobile-First Experience</strong></td>
+<td>Fast React Native performance tailored for mobile</td>
+</tr>
+<tr>
+<td><strong>Enhanced User Experience</strong></td>
+<td>Dynamic animations, gesture navigation, interactive components</td>
+</tr>
+<tr>
+<td><strong>Offline Access</strong></td>
+<td>AsyncStorage retains data for low-connectivity environments</td>
+</tr>
+<tr>
+<td><strong>Multi-Location Management</strong></td>
+<td>Save and switch between multiple locations effortlessly</td>
+</tr>
+</tbody>
+</table>
+<h3><strong>Real-World Impact</strong></h3>
+<ul>
+<li>🎓 <strong>Students:</strong> Plan outdoor activities based on real-time weather  </li>
+<li>💼 <strong>Professionals:</strong> Optimize commutes around weather disruptions  </li>
+<li>✈️ <strong>Travelers:</strong> Track forecasts across multiple destinations  </li>
+<li>👨‍👩‍👧‍👦 <strong>Families:</strong> Coordinate weekend activities with accurate forecasts</li>
+</ul>
+<hr />
+<h2><strong>Core Features</strong></h2>
+<p><strong>Display Weather Information:</strong> Current conditions, temperature, humidity, wind speed, 7-day forecasts via OpenWeatherMap API<br />
+<strong>Multi-Location Support:</strong> Save multiple locations with persistent storage<br />
+<strong>Offline Functionality:</strong> AsyncStorage maintains recent weather data<br />
+<strong>Interactive UI:</strong> Touch gestures, smooth animations, responsive components<br />
+<strong>System Integration:</strong> Push notifications for weather alerts and updates</p>
+<hr />
+<h2><strong>Project Structure &amp; Task Distribution</strong></h2>
+<pre class="codehilite"><code>WeatherDashboard/
+├── App.js                 # Main application entry
+├── screens/
+│   ├── HomeScreen.js      # Weather display (Anupa)
+│   ├── DetailsScreen.js   # Detailed forecast (Harry) 
+│   └── SettingsScreen.js  # Location management (Raj)
+├── components/
+│   ├── WeatherCard.js     # Weather info component (Anupa)
+│   ├── LocationModal.js   # Location selection (Raj)
+│   └── NavigationBar.js   # Bottom navigation (Kerlan)
+├── services/
+│   └── weatherAPI.js      # OpenWeatherMap integration (Anupa)
+└── styles/
+    └── globalStyles.js    # Consistent styling (All)
+</code></pre>
+
+<h3><strong>Individual Developer Assignments</strong></h3>
+<p><strong>Anupa Ragoonanan:</strong> OpenWeatherMap API integration, weather data fetching, HomeScreen development, AsyncStorage implementation for offline capability</p>
+<p><strong>Harry Joseph:</strong> DetailsScreen implementation, interactive touch components, gesture handling, pull-to-refresh functionality, animation systems</p>
+<p><strong>Raj Patel:</strong> Modal components, push notification setup, SettingsScreen creation, location management, micro-interactions and visual polish</p>
+<p><strong>Kerlan Augustine:</strong> React Navigation setup, screen integration, project management, documentation, testing coordination, video presentation</p>
+<hr />
+<h2><strong>Development Timeline &amp; Submission Requirements</strong></h2>
+<h3><strong>Phase 1 - Project Planning (Due: November 23, 2025)</strong></h3>
+<ul>
+<li><strong>Current Deliverable:</strong> Two-page technical documentation with cover page, purpose, functionalities, structure, and task distribution</li>
+<li><strong>Format:</strong> Professional document suitable for academic submission</li>
+<li><strong>Responsibility:</strong> Team collaboration led by Kerlan Augustine</li>
+</ul>
+<h3><strong>Phase 2 - Development (Due: December 1, 2025)</strong></h3>
+<ul>
+<li>Individual component development by assigned developers</li>
+<li>API integration and testing phases</li>
+<li><strong>Deliverable:</strong> Working application with documentation</li>
+</ul>
+<h3><strong>Phase 3 - Final Submission</strong></h3>
+<ul>
+<li><strong>a.</strong> Complete project files (<code>CPAN_213_Group14_Project.zip</code>)</li>
+<li><strong>b.</strong> Task distribution documentation with individual contributions</li>
+<li><strong>c.</strong> 15-minute video presentation (all team members)</li>
+<li><strong>d.</strong> Individual conclusion reports (1 page each, excluding cover page)</li>
+</ul>
+<div align="center" style="margin-top: 20px;">
+
+---
+
+**Weather Dashboard Development Team 14**  
+**CPAN 213 - Mobile App Development Project**
+
+</div>
+</body>
+</html>

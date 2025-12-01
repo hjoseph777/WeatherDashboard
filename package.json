@@ -6,6 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build": "expo export",
+    "export": "expo export",
     "mobile": "expo start --tunnel",
     "verify-setup": "bash verify-setup.sh",
     "team-check": "echo 'Node:' && node --version && echo 'npm:' && npm --version && echo 'Expo CLI:' && npx @expo/cli --version"
