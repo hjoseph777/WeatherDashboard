@@ -21,6 +21,12 @@ Weather Dashboard is a real-time weather application built with React Native and
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://weather-dashboard-azure-pi.vercel.app/)
 
+### Video Demonstration
+
+[![Watch Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/53bm9pvZZAQ)
+
+[![Weather Dashboard Demo](https://img.youtube.com/vi/53bm9pvZZAQ/0.jpg)](https://youtu.be/53bm9pvZZAQ)
+
 ## Project Documentation
 [![View Instructions](https://img.shields.io/badge/View-Instruction5.md-green?style=for-the-badge&logo=markdown&logoColor=white)](Instruction5.md)
 
