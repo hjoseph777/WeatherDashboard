@@ -12,11 +12,6 @@
 ## Overview
 Weather Dashboard is a real-time weather application built with React Native and Expo, featuring current weather conditions, 7-day forecasts, and location management with cross-platform compatibility.
 
-## Quick Download
-**Get the complete project instantly:**
-
-[![Download WeatherDashboard](https://img.shields.io/badge/Download-WeatherDashboard.zip-blue?style=for-the-badge&logo=download)](https://github.com/hjoseph777/WeatherDashboard/releases/download/v1/WeatherDashboard.zip)
-
 ## Live Demo
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://weather-dashboard-azure-pi.vercel.app/)
